@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 
-package se.thanh.stitch
+package se.thanh.stitch.types
 
-import cats.effect.{ IO, IOApp }
+enum Nat:
+  case Zero
+  case Succ(val n: Nat)
 
-object Main extends IOApp.Simple:
-
-  def run: IO[Unit] =
-    IO.println("Hello sbt-typelevel!")
+object Nat:
+  import Nat.*
+  extension (nat: Nat)
+    def +(m: Nat): Nat =
+      nat match
+        case Zero    => m
+        case Succ(n) => Succ(n + m)

@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-package se.thanh.stitch
+package se.thanh.stitch.types
 
-import cats.effect.{ IO, IOApp }
-
-object Main extends IOApp.Simple:
-
-  def run: IO[Unit] =
-    IO.println("Hello sbt-typelevel!")
+// class Ex[Nat <: Int, A](data: F[A])

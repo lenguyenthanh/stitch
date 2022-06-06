@@ -18,6 +18,19 @@ ThisBuild / tlSitePublishBranch := Some("main")
 ThisBuild / githubWorkflowPublishTargetBranches := Seq()   // Don't publish anywhere
 ThisBuild / scalaVersion                        := "3.1.2" // the default Scala
 
+val commonSettings = Seq(
+  scalacOptions -= "-Xfatal-warnings",
+  scalacOptions ++= Seq(
+    "-source:future",
+    "-indent"
+  ),
+  libraryDependencies ++= Seq(
+    "org.typelevel" %%% "cats-core"           % "2.7.0",
+    "org.scalameta" %%% "munit"               % "0.7.29" % Test,
+    "org.typelevel" %%% "munit-cats-effect-3" % "1.0.7"  % Test
+  )
+)
+
 lazy val root = tlCrossRootProject.aggregate(core)
 
 lazy val core = crossProject(JVMPlatform, JSPlatform)
@@ -25,12 +38,10 @@ lazy val core = crossProject(JVMPlatform, JSPlatform)
   .in(file("core"))
   .settings(
     name := "stitch",
+    commonSettings,
     libraryDependencies ++= Seq(
-      "org.typelevel" %%% "cats-core"           % "2.7.0",
-      "org.typelevel" %%% "cats-effect"         % "3.3.12",
-      "org.typelevel" %%% "cats-parse"          % "0.3.6",
-      "org.scalameta" %%% "munit"               % "0.7.29" % Test,
-      "org.typelevel" %%% "munit-cats-effect-3" % "1.0.7"  % Test
+      "org.typelevel" %%% "cats-effect" % "3.3.12",
+      "org.typelevel" %%% "cats-parse"  % "0.3.6"
     )
   )
 

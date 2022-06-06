@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 
-package se.thanh.stitch
+package se.thanh.stitch.types
 
-import cats.effect.{ IO, IOApp }
+import scala.compiletime.ops.int.*
 
-object Main extends IOApp.Simple:
+enum Fin[Nat <: Int]:
+  case FZ[N <: Int]()              extends Fin[S[N]]
+  case FS[N <: Int](val n: Fin[N]) extends Fin[S[N]]
 
-  def run: IO[Unit] =
-    IO.println("Hello sbt-typelevel!")
+object Fin:
+  def toInt[Nat <: Int](n: Fin[Nat]): Int =
+    n match
+      case FZ()   => 0
+      case FS(n1) => toInt(n1) + 1
